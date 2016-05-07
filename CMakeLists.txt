@@ -3,8 +3,8 @@ project(matchstick)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
-set(LIB_HEADERS matchstick/matchstick.h matchstick/types.h matchstick/types_private.h)
-set(LIB_SOURCES matchstick/matchstick.c)
+set(LIB_HEADERS matchstick/matchstick.h matchstick/types.h matchstick/types_private.h matchstick/destruct.h matchstick/compile.h matchstick/execute.h)
+set(LIB_SOURCES matchstick/matchstick.c matchstick/compile.c matchstick/execute.c matchstick/destruct.c)
 add_library(matchstick ${LIB_HEADERS} ${LIB_SOURCES})
 
 set(TEST_SOURCES test/simple.c)
