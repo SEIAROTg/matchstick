@@ -146,7 +146,7 @@ namespace _matchstick {
 
     struct MS_CHARS {
         const MS_CHAR value;
-        struct CHAR_CHAIN *next;
+        struct MS_CHARS *next;
         MS_CHARS(MS_CHAR value);
     };
 }
