@@ -26,10 +26,18 @@ namespace _matchstick {
     struct FSM_MATCH {
         enum FSM_MATCH_TYPE type;
         struct FSM_MATCH *next_match;
+        virtual ~FSM_MATCH() {};
+    };
+
+    struct FSM_MATCH_BASIC : public FSM_MATCH {
+
     };
 
     struct FSM_MATCH_EXACT : public FSM_MATCH {
-        MS_CHAR value;
+        MS_CHAR *value;
+        ~FSM_MATCH_EXACT() {
+            delete value;
+        };
     };
 
     struct FSM_MATCH_RANGE : public FSM_MATCH {
@@ -45,6 +53,11 @@ namespace _matchstick {
 
     struct FSM_RULE {
         enum FSM_RULE_TYPE type;
+        virtual ~FSM_RULE() {};
+    };
+
+    struct FSM_RULE_BASIC : public FSM_RULE {
+
     };
 
     struct FSM_RULE_MATCH : public FSM_RULE {
@@ -69,6 +82,11 @@ namespace _matchstick {
     struct FSM_COUNTER {
         enum FSM_COUNTER_TYPE type;
         unsigned int id;
+        virtual ~FSM_COUNTER() {};
+    };
+
+    struct FSM_COUNTER_BASIC : public FSM_COUNTER {
+
     };
 
     struct FSM_COUNTER_VALUE : public FSM_COUNTER {
