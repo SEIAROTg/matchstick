@@ -1,5 +1,8 @@
 namespace _matchstick_compile {
 
+    const MS_CHAR *ESCAPE = L"abtrvfne0";
+    const MS_CHAR *ESCAPE_DECODED = L"\a\b\t\r\v\f\n\e\0";
+
     const MS_CHAR *SPECIAL_MATCH = L"^$.";
     const enum FSM_MATCH_TYPE SPECIAL_MATCH_TYPE[] = {
             FSM_MATCH_TYPE_START,

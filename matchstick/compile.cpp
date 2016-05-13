@@ -29,6 +29,23 @@ namespace _matchstick_compile {
         }
         return match;
     }
+
+    const MS_CHAR pick_escaped_char(MS_CHAR **cursor, int in_charset) {
+        MS_CHAR *pos;
+        MS_CHAR *temp_cursor = *cursor;
+        if (**cursor == '\\') {
+            ++temp_cursor;
+            if (!(*temp_cursor == 'b' && !in_charset) && (pos = wcsrchr(ESCAPE, **cursor))) {
+                ++temp_cursor;
+                *cursor = temp_cursor;
+                return ESCAPE_DECODED[pos - ESCAPE];
+            } else {
+                return (MS_CHAR) 0;
+            }
+        } else {
+            return (MS_CHAR) 0;
+        }
+    }
     using namespace _matchstick;
 
 }
