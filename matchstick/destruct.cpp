@@ -17,8 +17,11 @@ namespace _matchstick_destruct {
     }
 
     void destruct_fsm_rule(FSM_RULE *rule) {
-        if (rule->type == FSM_RULE_TYPE_INCLUDE || rule->type == FSM_RULE_TYPE_EXCLUDE) {
-            FSM_RULE_MATCH *real_rule = (FSM_RULE_MATCH *) rule;
+        if (rule->type == FSM_RULE_TYPE_INCLUDE) {
+            FSM_RULE_INCLUDE *real_rule = static_cast<FSM_RULE_INCLUDE *> (rule);
+            destruct_fsm_match(real_rule->first_match);
+        } else if (rule->type == FSM_RULE_TYPE_EXCLUDE) {
+            FSM_RULE_EXCLUDE *real_rule = static_cast<FSM_RULE_EXCLUDE *> (rule);
             destruct_fsm_match(real_rule->first_match);
         } else if (rule->type == FSM_RULE_TYPE_COUNTER) {
             FSM_RULE_COUNTER *real_rule = (FSM_RULE_COUNTER *) rule;
