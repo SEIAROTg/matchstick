@@ -139,6 +139,56 @@ namespace _matchstick_compile {
             return static_cast<FSM_MATCH *> (match);
         }
     }
+
+    FSM_RULE * const pick_charset(MS_CHAR **cursor) {
+        FSM_RULE_TYPE rule_type;
+        FSM_RULE_BASIC * rule;
+        FSM_MATCH * first_match = NULL;
+        FSM_MATCH * match_cursor = NULL;
+        if (**cursor != '[') {
+            return NULL;
+        } else {
+            ++*cursor;
+            if (**cursor == '^') {
+                ++*cursor;
+                rule_type = FSM_RULE_TYPE_EXCLUDE;
+            } else {
+                rule_type = FSM_RULE_TYPE_INCLUDE;
+            }
+            MS_CHAR * temp_cursor;
+            FSM_MATCH * match;
+            while (**cursor != ']') {
+                match = NULL;
+                temp_cursor = *cursor;
+                if (temp_cursor == *cursor) {
+                    match = pick_range_match(cursor);
+                }
+                if (temp_cursor == *cursor) {
+                    match = pick_char_match(cursor);
+                }
+                if (!match) {
+                    if (first_match) {
+                        delete first_match;
+                    }
+                    return NULL;
+                } else {
+                    if (match_cursor) {
+                        match_cursor->next_match = match;
+                        match_cursor = match_cursor->next_match;
+                    } else {
+                        match_cursor = match;
+                        first_match = match;
+                    }
+                }
+            }
+            if (first_match) {
+                rule = new FSM_RULE_BASIC(rule_type, first_match);
+                return static_cast<FSM_RULE *> (rule);
+            } else {
+                return NULL;
+            }
+        }
+    }
     unsigned int pick_number(MS_CHAR **cursor) {
         if (**cursor < '0' || **cursor > '9') {
             return INVALID_NUM;
