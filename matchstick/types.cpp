@@ -22,25 +22,12 @@ namespace _matchstick {
 
     FSM_RULE::FSM_RULE(enum FSM_RULE_TYPE type) : type(type) {};
 
-    FSM_RULE_BASIC::FSM_RULE_BASIC(enum FSM_RULE_TYPE type) : FSM_RULE(type) {};
-
-    FSM_RULE_INCLUDE::FSM_RULE_INCLUDE(struct FSM_MATCH *first_match) :
-            FSM_RULE(FSM_RULE_TYPE_INCLUDE),
-            first_match(first_match)
+    FSM_RULE_BASIC::FSM_RULE_BASIC(enum FSM_RULE_TYPE type, struct FSM_MATCH *first_match) :
+        FSM_RULE(type),
+        first_match(first_match)
     {};
 
-    FSM_RULE_INCLUDE::~FSM_RULE_INCLUDE() {
-        if (first_match) {
-            delete first_match;
-        }
-    }
-
-    FSM_RULE_EXCLUDE::FSM_RULE_EXCLUDE(struct FSM_MATCH *first_match) :
-            FSM_RULE(FSM_RULE_TYPE_EXCLUDE),
-            first_match(first_match)
-    {};
-
-    FSM_RULE_EXCLUDE::~FSM_RULE_EXCLUDE() {
+    FSM_RULE_BASIC::~FSM_RULE_BASIC() {
         if (first_match) {
             delete first_match;
         }

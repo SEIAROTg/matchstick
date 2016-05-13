@@ -63,19 +63,9 @@ namespace _matchstick {
     };
 
     struct FSM_RULE_BASIC : public FSM_RULE {
-        FSM_RULE_BASIC(enum FSM_RULE_TYPE type);
-    };
-
-    struct FSM_RULE_INCLUDE : public FSM_RULE {
         struct FSM_MATCH * const first_match;
-        FSM_RULE_INCLUDE(struct FSM_MATCH *first_match);
-        ~FSM_RULE_INCLUDE();
-    };
-
-    struct FSM_RULE_EXCLUDE : public FSM_RULE {
-        struct FSM_MATCH * const first_match;
-        FSM_RULE_EXCLUDE(struct FSM_MATCH *first_match);
-        ~FSM_RULE_EXCLUDE();
+        FSM_RULE_BASIC(enum FSM_RULE_TYPE type, struct FSM_MATCH *first_match);
+        ~FSM_RULE_BASIC();
     };
 
     struct FSM_RULE_COUNTER : public FSM_RULE {
