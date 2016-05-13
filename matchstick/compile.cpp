@@ -103,6 +103,31 @@ namespace _matchstick_compile {
         }
     }
 
+    FSM_MATCH * const pick_range_match(MS_CHAR **cursor) {
+        MS_CHAR * temp_cursor = *cursor;
+        MS_CHAR min = pick_char(&temp_cursor, 1);
+        MS_CHAR max;
+        if (temp_cursor == *cursor || *temp_cursor != '-' || *temp_cursor == ']') {
+            return NULL;
+        } else {
+            // to avoid CLion from thinking temp_cursor == temp_cursor2 to be always true
+            MS_CHAR * temp_cursor2 = temp_cursor + 1;
+            ++temp_cursor;
+            if (*temp_cursor == ']') {
+                return NULL;
+            } else {
+                max = pick_char(&temp_cursor2, 1);
+                if (temp_cursor == temp_cursor2) {
+                    return NULL;
+                } else {
+                    *cursor = temp_cursor2;
+                    FSM_MATCH_RANGE *match = new FSM_MATCH_RANGE(min, max);
+                    return static_cast<FSM_MATCH *> (match);
+                }
+            }
+        }
+    }
+
     unsigned int pick_number(MS_CHAR **cursor) {
         if (**cursor < '0' || **cursor > '9') {
             return INVALID_NUM;
