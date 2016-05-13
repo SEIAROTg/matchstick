@@ -3,19 +3,23 @@
 
 #include <wchar.h>
 
-typedef wchar_t MS_CHAR;
+namespace matchstick {
 
-typedef void MS_REGEX;
+    typedef wchar_t MS_CHAR;
 
-typedef struct MS_MATCH_GROUP {
-    struct MS_GROUP * next;
-    struct MS_CHAR * start;
-    int length;
-} MS_GROUP;
+    typedef void PATTERN;
 
-typedef struct MS_MATCH {
-    struct MS_MATCH * next;
-    struct MS_GROUP * first_group;
-} MS_MATCH;
+    struct MATCH_GROUP {
+        MATCH_GROUP *next;
+        MS_CHAR *start;
+        int length;
+    };
+
+    struct MATCH {
+        MATCH *next;
+        MATCH_GROUP *first_group;
+    };
+
+}
 
 #endif //MATCHSTICK_TYPES_H

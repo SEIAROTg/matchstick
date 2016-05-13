@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.3)
 project(matchstick)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 set(LIB_HEADERS matchstick/matchstick.h matchstick/types.h matchstick/types_private.h matchstick/destruct.h matchstick/compile.h matchstick/execute.h)
-set(LIB_SOURCES matchstick/matchstick.c matchstick/compile.c matchstick/execute.c matchstick/destruct.c)
+set(LIB_SOURCES matchstick/matchstick.cpp matchstick/compile.cpp matchstick/execute.cpp matchstick/destruct.cpp)
 add_library(matchstick ${LIB_HEADERS} ${LIB_SOURCES})
 
-set(TEST_SOURCES test/simple.c)
+set(TEST_SOURCES test/simple.cpp)
 foreach(TEST_SOURCE ${TEST_SOURCES})
     get_filename_component(TEST_NAME ${TEST_SOURCE} NAME_WE)
     add_executable(${TEST_NAME} ${TEST_SOURCE})
