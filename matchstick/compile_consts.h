@@ -7,4 +7,16 @@ namespace _matchstick_compile {
             FSM_MATCH_TYPE_ANY,
     };
 
+    const MS_CHAR *SPECIAL_SLASH_MATCH = L"bdswBDSW";
+    const enum FSM_MATCH_TYPE SPECIAL_SLASH_MATCH_TYPE[] = {
+            FSM_MATCH_TYPE_BOUNDARY,
+            FSM_MATCH_TYPE_DIGIT,
+            FSM_MATCH_TYPE_SPACE,
+            FSM_MATCH_TYPE_WORD,
+            FSM_MATCH_TYPE_NONBOUNDARY,
+            FSM_MATCH_TYPE_NONDIGIT,
+            FSM_MATCH_TYPE_NONSPACE,
+            FSM_MATCH_TYPE_NONWORD,
+    };
+
 }
