@@ -1,5 +1,7 @@
 namespace _matchstick_compile {
 
+    const unsigned int INVALID_NUM = (unsigned int) -1;
+
     const MS_CHAR *ESCAPE = L"abtrvfne0";
     const MS_CHAR *ESCAPE_DECODED = L"\a\b\t\r\v\f\n\e\0";
 

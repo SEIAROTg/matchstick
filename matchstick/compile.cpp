@@ -46,6 +46,20 @@ namespace _matchstick_compile {
             return (MS_CHAR) 0;
         }
     }
+
+    unsigned int pick_number(MS_CHAR **cursor) {
+        if (**cursor < '0' || **cursor > '9') {
+            return INVALID_NUM;
+        } else {
+            unsigned int num = 0;
+            while (**cursor >= '0' && **cursor <= '9') {
+                num *= 10;
+                num += **cursor - '0';
+                ++*cursor;
+            }
+            return num;
+        }
+    }
     using namespace _matchstick;
 
 }
