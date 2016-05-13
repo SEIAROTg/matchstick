@@ -128,6 +128,17 @@ namespace _matchstick_compile {
         }
     }
 
+    // assumed to be in charset
+    FSM_MATCH * const pick_char_match(MS_CHAR **cursor) {
+        MS_CHAR * temp_cursor = *cursor;
+        MS_CHAR c = pick_char(&temp_cursor, 1);
+        if (temp_cursor == *cursor) {
+            return NULL;
+        } else {
+            FSM_MATCH_EXACT * match = new FSM_MATCH_EXACT(c);
+            return static_cast<FSM_MATCH *> (match);
+        }
+    }
     unsigned int pick_number(MS_CHAR **cursor) {
         if (**cursor < '0' || **cursor > '9') {
             return INVALID_NUM;
