@@ -47,6 +47,29 @@ namespace _matchstick_compile {
         }
     }
 
+    const MS_CHAR pick_char(MS_CHAR **cursor, int in_charset) {
+        MS_CHAR *pos;
+        if (in_charset) {
+            pos = wcsrchr(INVALID_CHAR_CHARSET, **cursor);
+        } else {
+            pos = wcsrchr(INVALID_CHAR_N_CHARSET, **cursor);
+        }
+        if (pos) {
+            return (MS_CHAR) 0;
+        } else {
+            MS_CHAR ret;
+            MS_CHAR *temp_cursor = *cursor;
+            ret = pick_escaped_char(&temp_cursor, in_charset);
+            if (temp_cursor == *cursor) {
+                ++*cursor;
+                return *temp_cursor;
+            } else {
+                *cursor = temp_cursor;
+                return ret;
+            }
+        }
+    }
+
     unsigned int pick_number(MS_CHAR **cursor) {
         if (**cursor < '0' || **cursor > '9') {
             return INVALID_NUM;

@@ -24,4 +24,7 @@ namespace _matchstick_compile {
             FSM_MATCH_TYPE_NONWORD,
     };
 
+    const MS_CHAR *INVALID_CHAR_N_CHARSET = L"^$.([{.*?";
+    const MS_CHAR *INVALID_CHAR_CHARSET = L"]";
+
 }
