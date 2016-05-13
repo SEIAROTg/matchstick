@@ -13,13 +13,11 @@ int main () {
         L"foo00",
     };
     printf("%lu\n", sizeof tests);
-    matchstick::PATTERN * regex;
-    regex = matchstick::compile_pattern(pattern, "");
+    matchstick::PATTERN regex(pattern, "");
     printf("PATTERN COMPILED - \"%ls\"", pattern);
     int n = sizeof(tests) / sizeof(wchar_t *);
     for (int i = 0; i < n; ++i) {
-        printf("TEST #%d RESULT: %d FOR \"%ls\"\n", i, matchstick::test(regex, tests[i]), tests[i]);
+        printf("TEST #%d RESULT: %d FOR \"%ls\"\n", i, regex.test(tests[i]), tests[i]);
     }
-    matchstick::destruct_pattern(regex);
     return 0;
 }

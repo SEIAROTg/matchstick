@@ -1,66 +1,37 @@
 #ifndef MATCHSTICK_H
 #define MATCHSTICK_H
 
-#include "types.h"
+#include <cwchar>
 
 namespace matchstick {
 
-    /*
-     *
-     * Compile pattern in MS_CHAR* into REGEX*
-     *
-     * Return the compiled pattern
-     *
-     */
-    PATTERN *compile_pattern(const MS_CHAR *pattern, const char *flags);
+    typedef wchar_t MS_CHAR;
 
-    /*
-     *
-     * Destroy a compiled pattern
-     *
-     */
-    void destruct_pattern(PATTERN *pattern);
+    struct MATCH_GROUP {
+        MATCH_GROUP *next;
+        MS_CHAR *start;
+        int length;
+    };
 
-    /*
-     *
-     * Test if str matches with pattern
-     *
-     * Return a boolean representation whether str matches with pattern
-     *
-     */
-    int test(const PATTERN *pattern, const MS_CHAR *str);
+    struct MATCH {
+        MATCH *next;
+        MATCH_GROUP *first_group;
+    };
 
     int test(const MS_CHAR *pattern, const MS_CHAR *str, const char *flags);
-
-    /*
-     *
-     * Search for the first match of pattern in str
-     *
-     * *str will be set to the beginning of the first match
-     * Return the length of the match
-     *
-     */
-    int search(const PATTERN *pattern, MS_CHAR **str);
-
     int search(const MS_CHAR *pattern, MS_CHAR **str, const char *flags);
-
-    /*
-     *
-     * Find matches of pattern in str
-     *
-     * Return found matches or NULL if no matches found
-     *
-     */
-    MATCH *match(const PATTERN *pattern, const MS_CHAR *str);
-
     MATCH *match(const MS_CHAR *pattern, const MS_CHAR *str, const char *flags);
 
-    /*
-     *
-     * Destory a match
-     *
-     */
-    void destruct_match(MATCH *match);
+    struct PATTERN {
+    private:
+        void * regex;
+    public:
+        PATTERN(const MS_CHAR *pattern, const char *flags);
+        ~PATTERN();
+        int test(const MS_CHAR *str);
+        int search(MS_CHAR **str);
+        MATCH *match(const MS_CHAR *str);
+    };
 
 }
 
