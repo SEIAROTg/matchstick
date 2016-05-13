@@ -10,6 +10,7 @@ namespace _matchstick {
     enum FSM_MATCH_TYPE {
         FSM_MATCH_TYPE_EXACT,         // a
         FSM_MATCH_TYPE_RANGE,         // a-z
+        FSM_MATCH_TYPE_STRING,        // abc
         FSM_MATCH_TYPE_START,         // ^
         FSM_MATCH_TYPE_END,           // $
         FSM_MATCH_TYPE_ANY,           // .
@@ -39,15 +40,20 @@ namespace _matchstick {
     };
 
     struct FSM_MATCH_EXACT : public FSM_MATCH {
-        MS_CHAR * const value;
-        FSM_MATCH_EXACT(MS_CHAR *value);
-        ~FSM_MATCH_EXACT();
+        MS_CHAR const value;
+        FSM_MATCH_EXACT(MS_CHAR const value);
     };
 
     struct FSM_MATCH_RANGE : public FSM_MATCH {
         const MS_CHAR lower_bound;
         const MS_CHAR upper_bound;
         FSM_MATCH_RANGE(MS_CHAR lower_bound, MS_CHAR upper_bound);
+    };
+
+    struct FSM_MATCH_STRING : public FSM_MATCH {
+        MS_CHAR * const value;
+        FSM_MATCH_STRING(MS_CHAR * const value);
+        ~FSM_MATCH_STRING();
     };
 
     enum FSM_RULE_TYPE {

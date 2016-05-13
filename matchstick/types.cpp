@@ -7,12 +7,13 @@ namespace _matchstick {
 
     FSM_MATCH_BASIC::FSM_MATCH_BASIC(enum FSM_MATCH_TYPE type) : FSM_MATCH(type) {};
 
-    FSM_MATCH_EXACT::FSM_MATCH_EXACT(MS_CHAR *value) : FSM_MATCH(FSM_MATCH_TYPE_EXACT), value(value) {};
+    FSM_MATCH_EXACT::FSM_MATCH_EXACT(MS_CHAR const value) : FSM_MATCH(FSM_MATCH_TYPE_EXACT), value(value) {};
 
-    FSM_MATCH_EXACT::~FSM_MATCH_EXACT() {
+    FSM_MATCH_STRING::FSM_MATCH_STRING(MS_CHAR * const value) : FSM_MATCH(FSM_MATCH_TYPE_STRING), value(value) {};
+
+    FSM_MATCH_STRING::~FSM_MATCH_STRING() {
         delete [] value;
     };
-
 
     FSM_MATCH_RANGE::FSM_MATCH_RANGE(MS_CHAR lower_bound, MS_CHAR upper_bound) :
             FSM_MATCH(FSM_MATCH_TYPE_RANGE),
