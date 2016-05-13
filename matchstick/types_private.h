@@ -38,7 +38,7 @@ namespace _matchstick {
         MS_CHAR * const value;
         FSM_MATCH_EXACT(MS_CHAR *value) : FSM_MATCH(FSM_MATCH_TYPE_EXACT), value(value) {};
         ~FSM_MATCH_EXACT() {
-            delete value;
+            delete [] value;
         };
     };
 
