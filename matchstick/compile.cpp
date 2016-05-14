@@ -202,6 +202,21 @@ namespace _matchstick_compile {
             return num;
         }
     }
+
+    enum FSM_COUNTER_MODE pick_counter_mode(MS_CHAR **cursor) {
+        switch (**cursor) {
+            case '?':
+                ++*cursor;
+                return FSM_COUNTER_MODE_RELUCTANT;
+                break;
+            case '+':
+                ++*cursor;
+                return FSM_COUNTER_MODE_POSSESSIVE;
+                break;
+            default:
+                return FSM_COUNTER_MODE_GREEDY;
+        }
+    }
     using namespace _matchstick;
 
 }
