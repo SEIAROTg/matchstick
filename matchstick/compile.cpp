@@ -217,6 +217,64 @@ namespace _matchstick_compile {
                 return FSM_COUNTER_MODE_GREEDY;
         }
     }
+
+    FSM_COUNTER *pick_counter(MS_CHAR **cursor, unsigned int *counter_cursor) {
+        FSM_COUNTER * counter = NULL;
+        if (**cursor == '*') {
+            // any
+            ++*cursor;
+            counter = static_cast<FSM_COUNTER *> (
+                    new FSM_COUNTER_ANY(pick_counter_mode(cursor), *counter_cursor++)
+            );
+        } else if (**cursor == '?') {
+            // zero or one
+            ++*cursor;
+            counter = static_cast<FSM_COUNTER *> (
+                    new FSM_COUNTER_RANGE(pick_counter_mode(cursor), *counter_cursor++, 0, 1)
+            );
+        } else if (**cursor == '+') {
+            // one or more
+            ++*cursor;
+            counter = static_cast<FSM_COUNTER *> (
+                    new FSM_COUNTER_MIN(pick_counter_mode(cursor), *counter_cursor++, 1)
+            );
+        } else if (**cursor == '{') {
+            MS_CHAR *temp_cursor = *cursor;
+            ++temp_cursor;
+            unsigned int min = pick_number(&temp_cursor);
+            if (min != INVALID_NUM && *temp_cursor == '}') {
+                // exact
+                *cursor = temp_cursor + 1;
+                counter = static_cast<FSM_COUNTER *> (
+                        new FSM_COUNTER_EXACT(pick_counter_mode(cursor), *counter_cursor++, min)
+                );
+            } else if (*temp_cursor == ',') {
+                unsigned int max = pick_number(&temp_cursor);
+                if (*temp_cursor == '}') {
+                    if (min != INVALID_NUM && max != INVALID_NUM) {
+                        // range
+                        *cursor = temp_cursor + 1;
+                        counter = static_cast<FSM_COUNTER *> (
+                                new FSM_COUNTER_RANGE(pick_counter_mode(cursor), *counter_cursor++, min, max)
+                        );
+                    } else if (min != INVALID_NUM) {
+                        // min
+                        *cursor = temp_cursor + 1;
+                        counter = static_cast<FSM_COUNTER *> (
+                                new FSM_COUNTER_MIN(pick_counter_mode(cursor), *counter_cursor++, min)
+                        );
+                    } else if (max != INVALID_NUM) {
+                        // max
+                        *cursor = temp_cursor + 1;
+                        counter = static_cast<FSM_COUNTER *> (
+                                new FSM_COUNTER_MAX(pick_counter_mode(cursor), *counter_cursor++, max)
+                        );
+                    }
+                }
+            }
+        }
+        return counter;
+    }
     using namespace _matchstick;
 
 }
