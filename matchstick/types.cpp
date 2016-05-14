@@ -45,30 +45,33 @@ namespace _matchstick {
         }
     }
 
-    FSM_COUNTER::FSM_COUNTER(enum FSM_COUNTER_TYPE type, unsigned int id) :
+    FSM_COUNTER::FSM_COUNTER(enum FSM_COUNTER_TYPE type, enum FSM_COUNTER_MODE mode, unsigned int id) :
             type(type),
+            mode(mode),
             id(id)
     {};
 
-    FSM_COUNTER_BASIC::FSM_COUNTER_BASIC(enum FSM_COUNTER_TYPE type, unsigned int id) : FSM_COUNTER(type, id) {};
+    FSM_COUNTER_ANY::FSM_COUNTER_ANY(enum FSM_COUNTER_MODE mode, unsigned int id) :
+            FSM_COUNTER(FSM_COUNTER_TYPE_ANY, mode, id)
+    {};
 
-    FSM_COUNTER_EXACT::FSM_COUNTER_EXACT(unsigned int id, unsigned int value) :
-            FSM_COUNTER(FSM_COUNTER_TYPE_EXACT, id),
+    FSM_COUNTER_EXACT::FSM_COUNTER_EXACT(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int value) :
+            FSM_COUNTER(FSM_COUNTER_TYPE_EXACT, mode, id),
             value(value)
     {};
 
-    FSM_COUNTER_MIN::FSM_COUNTER_MIN(unsigned int id, unsigned int min) :
-            FSM_COUNTER(FSM_COUNTER_TYPE_MIN, id),
+    FSM_COUNTER_MIN::FSM_COUNTER_MIN(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int min) :
+            FSM_COUNTER(FSM_COUNTER_TYPE_MIN, mode, id),
             min(min)
     {};
 
-    FSM_COUNTER_MAX::FSM_COUNTER_MAX(unsigned int id, unsigned int max) :
-            FSM_COUNTER(FSM_COUNTER_TYPE_MAX, id),
+    FSM_COUNTER_MAX::FSM_COUNTER_MAX(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int max) :
+            FSM_COUNTER(FSM_COUNTER_TYPE_MAX, mode, id),
             max(max)
     {};
 
-    FSM_COUNTER_RANGE::FSM_COUNTER_RANGE(unsigned int id, unsigned int min, unsigned int max) :
-            FSM_COUNTER(FSM_COUNTER_TYPE_RANGE, id),
+    FSM_COUNTER_RANGE::FSM_COUNTER_RANGE(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int min, unsigned int max) :
+            FSM_COUNTER(FSM_COUNTER_TYPE_RANGE, mode, id),
             min(min),
             max(max)
     {};

@@ -83,44 +83,49 @@ namespace _matchstick {
     enum FSM_COUNTER_TYPE {
         FSM_COUNTER_TYPE_INCREASE,
         FSM_COUNTER_TYPE_ANY,         // *
-        FSM_COUNTER_TYPE_NONZERO,     // +
-        FSM_COUNTER_TYPE_ZEROONE,     // ?
         FSM_COUNTER_TYPE_EXACT,       // {10}
         FSM_COUNTER_TYPE_MAX,         // {,10}
-        FSM_COUNTER_TYPE_MIN,         // {10,}
-        FSM_COUNTER_TYPE_RANGE,       // {10,20}
+        FSM_COUNTER_TYPE_MIN,         // {10,} +
+        FSM_COUNTER_TYPE_RANGE,       // {10,20} ?
+    };
+
+    enum FSM_COUNTER_MODE {
+        FSM_COUNTER_MODE_GREEDY,
+        FSM_COUNTER_MODE_RELUCTANT,
+        FSM_COUNTER_MODE_POSSESSIVE,
     };
 
     struct FSM_COUNTER {
         const enum FSM_COUNTER_TYPE type;
+        const enum FSM_COUNTER_MODE mode;
         const unsigned int id;
-        FSM_COUNTER(enum FSM_COUNTER_TYPE type, unsigned int id);
+        FSM_COUNTER(enum FSM_COUNTER_TYPE type, enum FSM_COUNTER_MODE mode, unsigned int id);
         virtual ~FSM_COUNTER() {};
     };
 
-    struct FSM_COUNTER_BASIC : public FSM_COUNTER {
-        FSM_COUNTER_BASIC(enum FSM_COUNTER_TYPE type, unsigned int id);
+    struct FSM_COUNTER_ANY : public FSM_COUNTER {
+        FSM_COUNTER_ANY(enum FSM_COUNTER_MODE mode, unsigned int id);
     };
 
     struct FSM_COUNTER_EXACT : public FSM_COUNTER {
         const unsigned int value;
-        FSM_COUNTER_EXACT(unsigned int id, unsigned int value);
+        FSM_COUNTER_EXACT(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int value);
     };
 
     struct FSM_COUNTER_MIN : public FSM_COUNTER {
         const unsigned int min;
-        FSM_COUNTER_MIN(unsigned int id, unsigned int min);
+        FSM_COUNTER_MIN(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int min);
     };
 
     struct FSM_COUNTER_MAX : public FSM_COUNTER {
         const unsigned int max;
-        FSM_COUNTER_MAX(unsigned int id, unsigned int max);
+        FSM_COUNTER_MAX(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int max);
     };
 
     struct FSM_COUNTER_RANGE : public FSM_COUNTER {
         const unsigned int min;
         const unsigned int max;
-        FSM_COUNTER_RANGE(unsigned int id, unsigned int min, unsigned int max);
+        FSM_COUNTER_RANGE(enum FSM_COUNTER_MODE mode, unsigned int id, unsigned int min, unsigned int max);
     };
 
     struct FSM_TRANSITION {
