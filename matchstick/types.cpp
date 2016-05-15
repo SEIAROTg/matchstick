@@ -119,6 +119,39 @@ namespace _matchstick {
         }
     }
 
-    MS_CHARS::MS_CHARS(MS_CHAR value) : value(value), next(NULL) {};
+    template <typename T>
+    MS_CHAIN_NODE::MS_CHAIN_NODE(T value) : value(value), next(NULL) {};
+
+    template <typename T>
+    void MS_CHAIN::push(T value) {
+        MS_CHAIN_NODE<T> * node = new MS_CHAIN_NODE<T> (value);
+        if (first) {
+            cursor = cursor -> next = node;
+        } else {
+            first = cursor = node;
+        }
+        ++size;
+    }
+
+    template <typename T>
+    T * const MS_CHAIN::to_array() {
+        T * temp_cursor = first;
+        T * array = new T[size];
+        for (int i = 0; i < size; ++i) {
+            array[i] = temp_cursor -> value;
+            temp_cursor = temp_cursor -> next;
+        }
+        return array;
+    }
+
+    MS_CHAIN::MS_CHAIN() : first(NULL), cursor(NULL), size(0) {};
+
+    MS_CHAIN::~MS_CHAIN() {
+        for (int i = 0; i < size; ++i) {
+            cursor = first -> next;
+            delete first;
+            first = cursor;
+        }
+    }
 
 }

@@ -71,33 +71,19 @@ namespace _matchstick_compile {
     }
 
     MS_CHAR * const pick_string(MS_CHAR **cursor) {
-        MS_CHARS *chars = NULL;
-        MS_CHARS *chars_cursor = NULL;
-        unsigned int length = 0;
+        MS_CHAIN<MS_CHAR> chars;
         MS_CHAR picked_char;
         MS_CHAR *temp_cursor = *cursor;
         do {
             *cursor = temp_cursor;
             picked_char = pick_char(&temp_cursor, 0);
             if (temp_cursor != *cursor) {
-                if (chars_cursor) {
-                    chars_cursor->next = new MS_CHARS(picked_char);
-                    chars_cursor = chars_cursor->next;
-                } else {
-                    chars_cursor = new MS_CHARS(picked_char);
-                    chars = chars_cursor;
-                }
-                ++length;
+                chars.push(picked_char);
             }
         } while (temp_cursor != *cursor);
-        if (chars) {
-            MS_CHAR * str = new MS_CHAR[length + 1];
-            for (int i = 0; i < length; ++i) {
-                str[i] = chars -> value;
-                chars = chars -> next;
-            }
-            str[length] = '\0';
-            return str;
+        if (chars.size) {
+            chars.push('\0');
+            return chars.to_array();
         } else {
             return NULL;
         }

@@ -149,11 +149,28 @@ namespace _matchstick {
         ~REGEX();
     };
 
-    struct MS_CHARS {
-        const MS_CHAR value;
-        struct MS_CHARS *next;
-        MS_CHARS(MS_CHAR value);
+    template <typename T>
+    class MS_CHAIN_NODE {
+    private:
+        T value;
+    public:
+        T * next;
+        MS_CHAIN_NODE(T value);
     };
+
+    template <typename T>
+    class MS_CHAIN {
+    private:
+        T * first;
+        T * cursor;
+    public:
+        unsigned int size;
+        void push(T value);
+        T * const to_array();
+        MS_CHAIN();
+        ~MS_CHAIN();
+    };
+
 }
 
 #endif //MATCHSTICK_TYPES_H
